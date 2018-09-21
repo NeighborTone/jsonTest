@@ -25,7 +25,7 @@ public:
 		age = json.GetParameter<std::string>("Player", "data", 1);
 		job = json.GetParameter<std::string>("Player", "data", 2);
 		//配列の取得
-		json.GetArrayParameter<std::string>("Player", "data", data ,std::size(data));
+		//json.GetArrayParameter<std::string>("Player", "data", data ,std::size(data));
 	}
 	void Show()
 	{
@@ -36,16 +36,38 @@ public:
 		std::cout << "Sex:" << sex << std::endl;
 		std::cout << "Age:" << age << std::endl;
 		std::cout << "Job:" << job << std::endl;
-		for (const auto& it : data)
-		{
-			std::cout << "Data:" << it << std::endl;
-		}
+		//for (const auto& it : data)
+	//	{
+		//	std::cout << "Data:" << it << std::endl;
+	//	}
 	}
 };
 //※JSONにはコメント文はない
 int main()
 {
-	Player player;
-	player.Show();
+	//Player player;
+	//player.Show();
+
+
+	//jsonオブジェクトにデータを追加する
+	picojson::object obj;
+	//配列用
+	picojson::array datalist;
+	for(int i = 0; i < 5; ++i)
+		datalist.push_back(picojson::value(static_cast<double>(i)));
+	//データの追加
+	obj.insert(std::make_pair("Name", "Hoge"));
+	obj.insert(std::make_pair("number", picojson::value(static_cast<double>(1))));
+	obj.insert(std::make_pair("flag", picojson::value(static_cast<bool>(false))));
+	obj.insert(std::make_pair("array", picojson::value(datalist)));
+	//文字列にするためにvalueを使用
+	picojson::value val(obj);
+	std::string out = val.serialize();
+	std::cout << out;
+	//書き出し
+	std::ofstream outputfile("out.json");
+	outputfile << out;
+	outputfile.close();
 	system("pause");
+
 }
