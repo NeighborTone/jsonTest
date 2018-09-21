@@ -1,4 +1,8 @@
 #include "JsonRead.hpp"
+#include <memory>
+#include <new>
+#include <crtdbg.h>
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
 
 class Player
 {
@@ -25,7 +29,7 @@ public:
 		age = json.GetParameter<std::string>("Player", "data", 1);
 		job = json.GetParameter<std::string>("Player", "data", 2);
 		//配列の取得
-		//json.GetArrayParameter<std::string>("Player", "data", data ,std::size(data));
+		json.GetArrayParameter<std::string>("Player", "data", data, std::size(data));
 	}
 	void Show()
 	{
@@ -36,18 +40,18 @@ public:
 		std::cout << "Sex:" << sex << std::endl;
 		std::cout << "Age:" << age << std::endl;
 		std::cout << "Job:" << job << std::endl;
-		//for (const auto& it : data)
-	//	{
-		//	std::cout << "Data:" << it << std::endl;
-	//	}
+		for (const auto& it : data)
+		{
+			std::cout << "Data:" << it << std::endl;
+		}
 	}
 };
 //※JSONにはコメント文はない
 int main()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//Player player;
 	//player.Show();
-
 
 	//jsonオブジェクトにデータを追加する
 	picojson::object obj;
@@ -64,6 +68,8 @@ int main()
 	picojson::value val(obj);
 	std::string out = val.serialize();
 	std::cout << "書き出し" << std::endl;
+	//★★★★★★★★★ここで暗号化をしたい★★★★★★★★★★★★
+
 	std::cout << out << std::endl;
 	//書き出し
 	std::ofstream outputfile("out.json");
@@ -79,6 +85,7 @@ int main()
 	}
 	ss << ifs.rdbuf();
 	ifs.close();
+	//★★★★★★★★★ここで復元をしたい★★★★★★★★★★★★★★
 
 	//JSONデータを解析する。
 	picojson::value v;
