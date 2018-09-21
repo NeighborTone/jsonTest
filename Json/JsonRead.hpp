@@ -62,6 +62,32 @@ public:
 	}
 
 	template <class T>
+	const T GetParameter(const std::string& name, const size_t index)
+	{
+		picojson::object obj_ = v_.get<picojson::object>();
+		const auto& arr = obj_[name].get<jsonArray>().at(index);
+		return arr.get<T>();
+	}
+
+	template <class T>
+	const void GetArrayParameter(const std::string& name, T* data, const size_t maxIndex)
+	{
+		picojson::object obj_ = v_.get<picojson::object>();
+		const auto& arr = obj_[name].get<jsonArray>();
+		assert(std::size(arr) == maxIndex);
+		size_t i = 0;
+		for (const auto& it_j : arr)
+		{
+			data[i] = it_j.get<T>();
+			++i;
+			if (i > maxIndex)
+			{
+				break;
+			}
+		}
+	}
+
+	template <class T>
 	const T GetParameter(const std::string& objectName, const std::string& name)
 	{
 		picojson::object obj_ =  v_.get<picojson::object>()[objectName].get<picojson::object>();
