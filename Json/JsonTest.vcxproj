@@ -118,6 +118,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="JsonRead.hpp" />
     <ClInclude Include="picojson.h" />
   </ItemGroup>
   <ItemGroup>
