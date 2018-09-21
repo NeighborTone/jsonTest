@@ -1,0 +1,10 @@
+{
+  "Player": 
+  {
+    "name": "json‚ÌƒeƒXƒg‚Å‚·",
+    "hp": 100,
+    "atk": 20.5,
+    "human": true,
+    "array": [ 0, 1, 2 ]
+  }
+}
