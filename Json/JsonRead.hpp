@@ -21,7 +21,7 @@ public:
 		std::ifstream ifs(path, std::ios::in);
 		if (ifs.fail())
 		{
-			std::cerr << "failed to read test.json" << std::endl;
+			std::cerr << "failed to read json" << std::endl;
 		}
 		ss << ifs.rdbuf();
 		ifs.close();

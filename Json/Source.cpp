@@ -63,11 +63,32 @@ int main()
 	//文字列にするためにvalueを使用
 	picojson::value val(obj);
 	std::string out = val.serialize();
-	std::cout << out;
+	std::cout << "書き出し" << std::endl;
+	std::cout << out << std::endl;
 	//書き出し
 	std::ofstream outputfile("out.json");
 	outputfile << out;
 	outputfile.close();
+
+	//JSONデータの読み込み。
+	std::stringstream ss;
+	std::ifstream ifs("out.json", std::ios::in);
+	if (ifs.fail())
+	{
+		std::cerr << "failed to read out.json" << std::endl;
+	}
+	ss << ifs.rdbuf();
+	ifs.close();
+
+	//JSONデータを解析する。
+	picojson::value v;
+	const std::string err = picojson::parse(v, ss);
+	if (err.empty() == false)
+	{
+		std::cerr << err << std::endl;
+	}
+	std::cout << "読み込み" << std::endl;
+	std::cout << v.serialize() << std::endl;
 	system("pause");
 
 }
