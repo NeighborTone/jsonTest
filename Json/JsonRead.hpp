@@ -7,7 +7,7 @@
 #include "picojson.h"
 
 using number = double;
-
+using jsonArray =  picojson::array;
 class JsonRead final
 {
 private:
@@ -66,5 +66,14 @@ public:
 	{
 		picojson::object obj_ =  v_.get<picojson::object>()[objectName].get<picojson::object>();
 		return obj_[name].get<T>();
+	}
+
+
+	template <class T>
+	const T GetArrayParameter(const std::string& objectName, const std::string& name, const size_t index)
+	{
+		picojson::object obj_ = v_.get<picojson::object>()[objectName].get<picojson::object>();
+		const auto& arr = obj_[name].get<jsonArray>().at(index);
+		return arr.get<T>();
 	}
 };

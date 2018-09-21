@@ -1,10 +1,9 @@
 {
-  "Player": 
-  {
-    "name": "jsonのテストです",
+  "Player": {
+    "name": "長岡",
     "hp": 100,
     "atk": 20.5,
     "human": true,
-    "array": [ 0, 1, 2 ]
+    "data": [ "男", "80歳", "勇者" ]
   }
 }
